@@ -1,0 +1,11 @@
+{
+  "name": "e2e",
+  "scripts": {
+    "test": "vitest"
+  },
+  "devDependencies": {
+    "@testcontainers/mysql": "^10.16.0",
+    "testcontainers": "^10.16.0",
+    "vitest": "^2.1.8"
+  }
+}
