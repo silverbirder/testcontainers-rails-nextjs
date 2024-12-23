@@ -33,6 +33,12 @@ class TodosController < ApplicationController
     end
   end
 
+  # DELETE /todos
+  def destroy_all
+    Todo.delete_all
+    head :no_content
+  end
+
   # DELETE /todos/1
   def destroy
     @todo.destroy!
