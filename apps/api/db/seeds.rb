@@ -7,3 +7,17 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+Todo.delete_all
+
+todos = [
+  { name: "Learn Rails", checked: false },
+  { name: "Build a Todo App", checked: true },
+  { name: "Master Next.js", checked: false }
+]
+
+todos.each do |todo|
+  Todo.create!(todo)
+end
+
+puts "Seeded #{todos.size} todos!"
