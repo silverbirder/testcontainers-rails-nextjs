@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeAll, afterAll } from "vitest";
+import { describe, it, expect, beforeAll, afterAll, beforeEach } from "vitest";
 import axios from "axios";
 import {
   DockerComposeEnvironment,
@@ -25,13 +25,33 @@ describe("Docker Compose Integration Test", () => {
   });
 
   afterAll(async () => {
-    await apiEnvironment.down();
+    await apiEnvironment.down({ removeVolumes: true });
+  });
+
+  beforeEach(async () => {
+    const apiContainer = apiEnvironment.getContainer("testcontainers_api");
+    await apiContainer.exec(["bin/rails", "db:reset"]);
   });
 
   it("should access the /todos endpoint and return data", async () => {
+    // Act
     const response = await axios.get(`${apiUrl}/todos`);
+
+    // Assert
     expect(response.status).toBe(200);
-    expect(Array.isArray(response.data)).toBe(true);
-    console.log("Todos response:", response.data);
+    expect(response.data).toHaveLength(3);
+  });
+
+  it("should delete all todos using a Rails command", async () => {
+    // Arrange
+    const apiContainer = apiEnvironment.getContainer("testcontainers_api");
+    await apiContainer.exec(["bin/rails", "runner", "Todo.delete_all"]);
+
+    // Act
+    const response = await axios.get(`${apiUrl}/todos`);
+
+    // Assert
+    expect(response.status).toBe(200);
+    expect(response.data).toEqual([]);
   });
 });
