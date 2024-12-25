@@ -24,7 +24,8 @@ describe("Docker Compose Integration Test", () => {
 
     const apiContainer = apiEnvironment.getContainer("testcontainers_api");
     const networks = apiContainer.getNetworkNames();
-    const host = apiContainer.getIpAddress(networks[0]);
+    const networkName = networks[0] ?? "";
+    const host = apiContainer.getIpAddress(networkName);
     const port = apiContainer.getMappedPort(3000);
     apiUrl = `http://${host}:${port}`;
     console.log({ apiUrl });
@@ -35,6 +36,7 @@ describe("Docker Compose Integration Test", () => {
     )
       .withEnvironment({ NEXT_PUBLIC_API_URL: apiUrl })
       .withExposedPorts(3200)
+      .withNetworkMode(networkName)
       .start();
 
     const webPort = webContainer.getMappedPort(3200);
