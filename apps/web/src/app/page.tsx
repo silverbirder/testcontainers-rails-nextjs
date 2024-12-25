@@ -1,5 +1,5 @@
-import { fetchTodos } from "@/pages/todo/action";
-import Page from "@/pages/todo/page";
+import { fetchTodos } from "@/components/todo/action";
+import Page from "@/components/todo/page";
 
 export default async function Home() {
   const todos = await fetchTodos();
