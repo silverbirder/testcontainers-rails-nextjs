@@ -1,3 +1,4 @@
+import { chromium } from "@playwright/test";
 import { describe, it, expect, beforeAll, afterAll } from "vitest";
 import axios from "axios";
 import {
@@ -80,6 +81,11 @@ describe("Docker Compose Integration Test", () => {
 
     // Act
     const response = await axios.get(todosPageUrl);
+
+    const browser = await chromium.launch();
+    const page = await browser.newPage();
+    await page.goto(todosPageUrl);
+    await page.screenshot({ path: "screenshots/screenshot-1.png" });
 
     // Assert
     expect(response.status).toBe(200);

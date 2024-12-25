@@ -4,7 +4,9 @@
     "test": "DEBUG=testcontainers* vitest"
   },
   "devDependencies": {
+    "@playwright/test": "^1.49.1",
     "@testcontainers/mysql": "^10.16.0",
+    "@types/node": "^22.10.2",
     "axios": "^1.7.9",
     "testcontainers": "^10.16.0",
     "vitest": "^2.1.8"
