@@ -26,6 +26,7 @@ describe("Docker Compose Integration Test", () => {
     const host = apiContainer.getHost();
     const port = apiContainer.getMappedPort(3000);
     apiUrl = `http://${host}:${port}`;
+    console.log({ apiUrl });
 
     const webPath = path.resolve(__dirname, "../../apps/web");
     webContainer = await (
