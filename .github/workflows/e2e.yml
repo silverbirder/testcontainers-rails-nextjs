@@ -8,11 +8,12 @@ jobs:
   e2e:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Use Node.js 22.x
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 22.x
-          cache: "npm"
+          cache: 'npm'
+          cache-dependency-path: e2e/package-lock.json
       - run: cd ./e2e && npm ci
       - run: cd ./e2e && npm test
