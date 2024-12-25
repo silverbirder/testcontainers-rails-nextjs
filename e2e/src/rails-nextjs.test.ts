@@ -23,7 +23,8 @@ describe("Docker Compose Integration Test", () => {
     ).up();
 
     const apiContainer = apiEnvironment.getContainer("testcontainers_api");
-    const host = apiContainer.getHost();
+    const networks = apiContainer.getNetworkNames();
+    const host = apiContainer.getIpAddress(networks[0]);
     const port = apiContainer.getMappedPort(3000);
     apiUrl = `http://${host}:${port}`;
     console.log({ apiUrl });
