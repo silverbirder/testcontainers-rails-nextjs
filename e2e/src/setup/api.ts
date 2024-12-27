@@ -7,7 +7,6 @@ export const setupApiContainer = async () => {
   const apiPath = path.resolve(__dirname, "../../../apps/api");
   const apiComposeFileName = "docker-compose.yml";
   const containerSuffix = `_${Date.now()}`;
-  const dbPort = `${Math.floor(10000 + Math.random() * 50000)}`;
   const apiPort = `${Math.floor(10000 + Math.random() * 50000)}`;
   const apiEnvironment = await new DockerComposeEnvironment(
     apiPath,
@@ -15,7 +14,6 @@ export const setupApiContainer = async () => {
   )
     .withEnvironment({
       CONTAINER_SUFFIX: containerSuffix,
-      DB_PORT: dbPort,
       API_PORT: apiPort,
     })
     .up();
