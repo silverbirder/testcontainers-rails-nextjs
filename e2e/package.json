@@ -1,7 +1,9 @@
 {
   "name": "e2e",
   "scripts": {
-    "test": "DEBUG=testcontainers* vitest"
+    "test": "DEBUG=testcontainers* vitest",
+    "test:health": "DEBUG=testcontainers* vitest ./src/health.test.ts",
+    "test:todo": "DEBUG=testcontainers* vitest ./src/todo.test.ts"
   },
   "devDependencies": {
     "@playwright/test": "^1.49.1",
