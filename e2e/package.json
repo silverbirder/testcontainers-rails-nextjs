@@ -1,5 +1,6 @@
 {
   "name": "e2e",
+  "type": "module",
   "scripts": {
     "test": "DEBUG=testcontainers* vitest",
     "test:health": "DEBUG=testcontainers* vitest ./src/health.test.ts",
