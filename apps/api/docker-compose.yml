@@ -24,7 +24,7 @@ services:
       db:
         condition: service_healthy
     ports:
-      - "${API_PORT:-3000}:3000"
+      - ":3000"
     environment:
       DATABASE_HOST: db
       DATABASE_USERNAME: root
