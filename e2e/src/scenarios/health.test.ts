@@ -2,7 +2,7 @@ import { chromium } from "@playwright/test";
 import { describe, it, expect, beforeAll, afterAll } from "vitest";
 import axios from "axios";
 import { StartedTestContainer } from "testcontainers";
-import { setupApiContainer, setupWebContainer } from "./setup";
+import { setupApiContainer, setupWebContainer } from "../setup";
 
 describe("Health check", () => {
   let apiContainer: StartedTestContainer;

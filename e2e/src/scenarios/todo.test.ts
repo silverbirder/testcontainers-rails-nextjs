@@ -1,8 +1,8 @@
-import { describe, it, expect, beforeAll, afterAll } from "vitest";
+import { describe, it, beforeAll, afterAll, expect } from "vitest";
 import { StartedTestContainer } from "testcontainers";
-import { setupApiContainer, setupWebContainer } from "./setup";
+import { setupApiContainer, setupWebContainer } from "../setup";
 import { chromium } from "@playwright/test";
-import axios from "axios";
+import { TodoPage } from "../pages";
 
 describe("Todo", () => {
   let apiContainer: StartedTestContainer;
@@ -43,17 +43,5 @@ describe("Todo", () => {
 
     // Assert
     expect(await page.title()).toBe("Create Next App");
-  });
-
-  it("should perform an API health check", async () => {
-    // Arrange
-    const todosEndpoint = `${apiPublicUrl}/todos`;
-
-    // Act
-    const response = await axios.get(todosEndpoint);
-
-    // Assert
-    expect(response.status).toBe(200);
-    expect(Array.isArray(response.data)).toBe(true);
   });
 });

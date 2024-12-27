@@ -3,8 +3,9 @@
   "type": "module",
   "scripts": {
     "test": "DEBUG=testcontainers* vitest",
-    "test:health": "DEBUG=testcontainers* vitest ./src/health.test.ts",
-    "test:todo": "DEBUG=testcontainers* vitest ./src/todo.test.ts"
+    "test:health": "DEBUG=testcontainers* vitest ./src/scenarios/health.test.ts",
+    "test:todo": "DEBUG=testcontainers* vitest ./src/scenarios/todo.test.ts",
+    "example": "playwright test"
   },
   "devDependencies": {
     "@playwright/test": "^1.49.1",
