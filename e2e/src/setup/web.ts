@@ -1,5 +1,5 @@
 import path from "path";
-import { GenericContainer } from "testcontainers";
+import { GenericContainer, RandomUuid } from "testcontainers";
 
 const WEB_PORT = 3200;
 
@@ -9,13 +9,15 @@ export const setupWebContainer = async (
   networkName
 ) => {
   const webPath = path.resolve(__dirname, "../../../apps/web");
+  const uuid = new RandomUuid();
+  const containerSuffix = `${uuid.nextUuid()}`;
   const webContainer = await (
     await GenericContainer.fromDockerfile(webPath)
       .withBuildArgs({
         API_URL: apiInternalUrl,
         NEXT_PUBLIC_API_URL: apiPublicUrl,
       })
-      .build("web")
+      .build(`web:${containerSuffix}`, { deleteOnExit: true })
   )
     .withExposedPorts(WEB_PORT)
     .withNetworkMode(networkName)
@@ -28,7 +30,7 @@ export const setupWebContainer = async (
     webContainer,
     webHost,
     teardown: async () => {
-      await webContainer.stop();
+      await webContainer.stop({ remove: true, removeVolumes: true });
     },
   };
 };

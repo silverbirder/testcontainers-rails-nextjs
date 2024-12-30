@@ -6,12 +6,11 @@ const API_PORT = 3000;
 export const setupApiContainer = async () => {
   const apiPath = path.resolve(__dirname, "../../../apps/api");
   const apiComposeFileName = "docker-compose.yml";
-  const containerSuffix = `_${Date.now()}`;
   const uuid = new RandomUuid();
+  const containerSuffix = `_${uuid.nextUuid()}`;
   const apiEnvironment = await new DockerComposeEnvironment(
     apiPath,
-    apiComposeFileName,
-    uuid
+    apiComposeFileName
   )
     .withEnvironment({
       CONTAINER_SUFFIX: containerSuffix,
@@ -33,7 +32,7 @@ export const setupApiContainer = async () => {
     apiPublicUrl: `http://${host}:${port}`,
     networkName,
     teardown: async () => {
-      await apiEnvironment.down();
+      await apiEnvironment.down({ removeVolumes: true });
     },
   };
 };
