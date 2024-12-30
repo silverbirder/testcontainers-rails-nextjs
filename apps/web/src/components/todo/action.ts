@@ -4,7 +4,9 @@ export type Todo = {
   checked: boolean;
 };
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+const API_URL = process.env.API_URL || "http://localhost:3000";
+const PUBLIC_API_URL =
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
 
 export async function fetchTodos(): Promise<Todo[]> {
   const response = await fetch(`${API_URL}/todos`, {
@@ -20,7 +22,7 @@ export async function createTodo(
   name: string,
   checked?: boolean
 ): Promise<Todo> {
-  const response = await fetch(`${API_URL}/todos`, {
+  const response = await fetch(`${PUBLIC_API_URL}/todos`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -36,7 +38,7 @@ export async function createTodo(
 }
 
 export async function deleteTodos(): Promise<void> {
-  const response = await fetch(`${API_URL}/todos`, {
+  const response = await fetch(`${PUBLIC_API_URL}/todos`, {
     method: "DELETE",
   });
 

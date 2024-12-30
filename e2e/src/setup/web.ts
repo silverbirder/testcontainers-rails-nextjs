@@ -3,12 +3,18 @@ import { GenericContainer } from "testcontainers";
 
 const WEB_PORT = 3200;
 
-export const setupWebContainer = async (apiHost, networkName) => {
+export const setupWebContainer = async (
+  apiInternalUrl,
+  apiPublicUrl,
+  networkName
+) => {
   const webPath = path.resolve(__dirname, "../../../apps/web");
   const webContainer = await (
     await GenericContainer.fromDockerfile(webPath)
-      .withBuildArgs({ NEXT_PUBLIC_API_URL: apiHost })
-      .withCache(true) // NEXT_PUBLIC_API_URLの値が、テストのたびに異なるのでキャッシュは意味がないかもしれない
+      .withBuildArgs({
+        API_URL: apiInternalUrl,
+        NEXT_PUBLIC_API_URL: apiPublicUrl,
+      })
       .build("web", { deleteOnExit: true })
   )
     .withExposedPorts(WEB_PORT)

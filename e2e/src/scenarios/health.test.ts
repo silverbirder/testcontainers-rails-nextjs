@@ -21,7 +21,7 @@ describe("Health check", () => {
     const networkName = apiSetup.networkName;
     teardownApi = apiSetup.teardown;
 
-    const webSetup = await setupWebContainer(apiInternalUrl, networkName);
+    const webSetup = await setupWebContainer(apiInternalUrl, apiPublicUrl, networkName);
     webContainer = webSetup.webContainer;
     webHost = webSetup.webHost;
     teardownWeb = webSetup.teardown;

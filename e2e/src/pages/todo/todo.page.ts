@@ -4,7 +4,6 @@ export class TodoPage {
   page: Page;
   newTodoInput: Locator;
   addButton: Locator;
-  todoItems: Locator;
   todoCheckbox: (name: string) => Locator;
   deleteButton: (name: string) => Locator;
   saveAllButton: Locator;
@@ -13,7 +12,6 @@ export class TodoPage {
     this.page = page;
     this.newTodoInput = page.getByPlaceholder("Add a new todo");
     this.addButton = page.getByRole("button", { name: "Add" });
-    this.todoItems = page.locator(".todo-list li");
     this.todoCheckbox = (todoName) =>
       page
         .locator(".todo-list li")
@@ -66,9 +64,20 @@ export class TodoPage {
   }
 
   /**
-   * Get all visible todo items.
+   * Get all visible todo items with their names and checked status.
    */
   async getTodos() {
-    return this.todoItems.allTextContents();
+    const todoItems = this.page.locator(".todo-list li");
+    const results: { name: string; checked: boolean }[] = [];
+    const itemsCount = await todoItems.count();
+
+    for (let i = 0; i < itemsCount; i++) {
+      const todo = todoItems.nth(i);
+      const name = await todo.locator("span").textContent();
+      const checked = await todo.locator("input[type='checkbox']").isChecked();
+      results.push({ name: name?.trim() || "", checked });
+    }
+
+    return results;
   }
 }

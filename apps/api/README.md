@@ -22,3 +22,9 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+## Docker
+
+```
+API_PORT=3200 docker-compose up -d
+```

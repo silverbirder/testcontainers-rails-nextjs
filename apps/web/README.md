@@ -39,6 +39,6 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 ## Docker
 
 ```
-docker build -t nextjs-docker .
-docker run -p 3200:3200 nextjs-docker
+docker build --build-arg API_URL=http://host.docker.internal:3000 --build-arg NEXT_PUBLIC_API_URL=http://localhost:3000 -t nextjs-docker .
+docker run --rm -p 3200:3200 nextjs-docker
 ```
