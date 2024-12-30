@@ -6,9 +6,11 @@ import { setupApiContainer, setupWebContainer } from "../setup";
 
 describe("Health check", () => {
   let apiContainer: StartedTestContainer;
+  let dbContainer: StartedTestContainer;
   let webContainer: StartedTestContainer;
   let apiPublicUrl: string;
   let apiInternalUrl: string;
+  let executeSqlFile: (sqlContent: string, fileName: string) => Promise<string>;
   let webHost: string;
   let teardownApi: () => Promise<void>;
   let teardownWeb: () => Promise<void>;
@@ -19,9 +21,15 @@ describe("Health check", () => {
     apiInternalUrl = apiSetup.apiInternalUrl;
     apiPublicUrl = apiSetup.apiPublicUrl;
     const networkName = apiSetup.networkName;
+    dbContainer = apiSetup.dbContainer;
+    executeSqlFile = apiSetup.executeSqlFile;
     teardownApi = apiSetup.teardown;
 
-    const webSetup = await setupWebContainer(apiInternalUrl, apiPublicUrl, networkName);
+    const webSetup = await setupWebContainer(
+      apiInternalUrl,
+      apiPublicUrl,
+      networkName
+    );
     webContainer = webSetup.webContainer;
     webHost = webSetup.webHost;
     teardownWeb = webSetup.teardown;
@@ -55,5 +63,30 @@ describe("Health check", () => {
     // Assert
     expect(response.status).toBe(200);
     expect(Array.isArray(response.data)).toBe(true);
+  });
+
+  it("should perform a DB health check", async () => {
+    // Arrange
+    const checkDatabaseSQL = "SHOW DATABASES LIKE 'api_development';";
+
+    // Act
+    const dbCheckOutput = await executeSqlFile(
+      checkDatabaseSQL,
+      "check_database.sql"
+    );
+    // Assert
+    expect(dbCheckOutput).toContain("api_development");
+
+    // Arrange
+    const checkTableSQL = "SHOW TABLES IN api_development LIKE 'todos';";
+
+    // Act
+    const tableCheckOutput = await executeSqlFile(
+      checkTableSQL,
+      "check_table.sql"
+    );
+
+    // Assert
+    expect(tableCheckOutput).toContain("todos");
   });
 });
