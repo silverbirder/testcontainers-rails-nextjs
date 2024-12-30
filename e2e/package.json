@@ -5,7 +5,8 @@
     "test": "DEBUG=testcontainers* vitest",
     "test:health": "DEBUG=testcontainers* vitest ./src/scenarios/health.test.ts",
     "test:todo": "DEBUG=testcontainers* vitest ./src/scenarios/todo.test.ts",
-    "example": "playwright test"
+    "example": "playwright test",
+    "example:codegen": "playwright codegen http://localhost:3200"
   },
   "devDependencies": {
     "@playwright/test": "^1.49.1",

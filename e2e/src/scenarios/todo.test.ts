@@ -32,16 +32,23 @@ describe("Todo", () => {
     await teardownApi();
   });
 
-  it("should perform a web health check", async () => {
+  it("should allow adding, toggling, and deleting a todo item successfully", async () => {
     // Arrange
     const todosPageUrl = `${webHost}`;
-
-    // Act
+    await apiContainer.exec(["bin/rails", "runner", "Todo.delete_all"]);
     const browser = await chromium.launch();
     const page = await browser.newPage();
-    await page.goto(todosPageUrl);
+    const todoPage = new TodoPage(page);
+    await todoPage.navigate(todosPageUrl);
+
+    // Act
+    const newTodo = "new Todo";
+    await todoPage.addTodo(newTodo);
+    await todoPage.toggleTodo(newTodo);
+    await todoPage.deleteTodoByName(newTodo);
 
     // Assert
-    expect(await page.title()).toBe("Create Next App");
+    const todos = await todoPage.getTodos();
+    expect(todos).toHaveLength(0);
   });
 });

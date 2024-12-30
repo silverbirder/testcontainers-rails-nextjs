@@ -8,9 +8,10 @@ export const setupWebContainer = async (apiHost, networkName) => {
   const webContainer = await (
     await GenericContainer.fromDockerfile(webPath)
       .withBuildArgs({ NEXT_PUBLIC_API_URL: apiHost })
-      .build()
+      .withCache(true)
+      // .build("web")
+      .build("web", { deleteOnExit: true })
   )
-    .withEnvironment({ NEXT_PUBLIC_API_URL: apiHost })
     .withExposedPorts(WEB_PORT)
     .withNetworkMode(networkName)
     .start();
@@ -23,6 +24,7 @@ export const setupWebContainer = async (apiHost, networkName) => {
     webHost,
     teardown: async () => {
       await webContainer.stop({ remove: true, removeVolumes: true });
+      // await webContainer.stop();
     },
   };
 };

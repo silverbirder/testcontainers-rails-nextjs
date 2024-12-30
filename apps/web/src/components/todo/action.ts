@@ -16,13 +16,16 @@ export async function fetchTodos(): Promise<Todo[]> {
   return response.json();
 }
 
-export async function createTodo(name: string): Promise<Todo> {
+export async function createTodo(
+  name: string,
+  checked?: boolean
+): Promise<Todo> {
   const response = await fetch(`${API_URL}/todos`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ todo: { name, checked: false } }),
+    body: JSON.stringify({ todo: { name, checked: checked ?? false } }),
   });
 
   if (!response.ok) {

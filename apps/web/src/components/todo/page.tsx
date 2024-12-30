@@ -31,7 +31,7 @@ export default function Page({ todos: initialTodos }: { todos: Todo[] }) {
   const handleSaveTodos = async () => {
     await deleteTodos();
     for (const todo of todos) {
-      await createTodo(todo.name);
+      await createTodo(todo.name, todo.checked);
     }
     const updatedTodos = await fetchTodos();
     setTodos(updatedTodos);
@@ -54,7 +54,7 @@ export default function Page({ todos: initialTodos }: { todos: Todo[] }) {
           Add
         </button>
       </div>
-      <ul className="w-full max-w-md">
+      <ul className="w-full max-w-md todo-list">
         {todos.map((todo) => (
           <li
             key={todo.id}
@@ -75,7 +75,6 @@ export default function Page({ todos: initialTodos }: { todos: Todo[] }) {
             />
             <button
               className="ml-4 bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
-              data-testid={`delete-todo-${todo.name}`}
               onClick={() => handleDeleteTodo(todo.id)}
             >
               Delete
