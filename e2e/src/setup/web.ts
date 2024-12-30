@@ -8,8 +8,7 @@ export const setupWebContainer = async (apiHost, networkName) => {
   const webContainer = await (
     await GenericContainer.fromDockerfile(webPath)
       .withBuildArgs({ NEXT_PUBLIC_API_URL: apiHost })
-      .withCache(true)
-      // .build("web")
+      .withCache(true) // NEXT_PUBLIC_API_URLの値が、テストのたびに異なるのでキャッシュは意味がないかもしれない
       .build("web", { deleteOnExit: true })
   )
     .withExposedPorts(WEB_PORT)
@@ -24,7 +23,6 @@ export const setupWebContainer = async (apiHost, networkName) => {
     webHost,
     teardown: async () => {
       await webContainer.stop({ remove: true, removeVolumes: true });
-      // await webContainer.stop();
     },
   };
 };

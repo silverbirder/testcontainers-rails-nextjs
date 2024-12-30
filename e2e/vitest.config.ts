@@ -6,5 +6,6 @@ export default defineConfig({
     testTimeout: 600_000,
     hookTimeout: 600_000,
     watch: false,
+    exclude: ["src/examples/**", "node_modules/**"],
   },
 });

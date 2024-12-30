@@ -14,6 +14,7 @@ export const setupApiContainer = async () => {
     .withEnvironment({
       CONTAINER_SUFFIX: containerSuffix,
     })
+    // 実装時は、以下のコメントを外して
     // .withNoRecreate()
     .up();
 
@@ -33,7 +34,6 @@ export const setupApiContainer = async () => {
     networkName,
     teardown: async () => {
       await apiEnvironment.down({ removeVolumes: true });
-      // await apiEnvironment.down();
     },
   };
 };
