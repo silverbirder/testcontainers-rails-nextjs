@@ -1,5 +1,5 @@
 import path from "path";
-import { DockerComposeEnvironment } from "testcontainers";
+import { DockerComposeEnvironment, RandomUuid } from "testcontainers";
 
 const API_PORT = 3000;
 
@@ -7,15 +7,15 @@ export const setupApiContainer = async () => {
   const apiPath = path.resolve(__dirname, "../../../apps/api");
   const apiComposeFileName = "docker-compose.yml";
   const containerSuffix = `_${Date.now()}`;
+  const uuid = new RandomUuid();
   const apiEnvironment = await new DockerComposeEnvironment(
     apiPath,
-    apiComposeFileName
+    apiComposeFileName,
+    uuid
   )
     .withEnvironment({
       CONTAINER_SUFFIX: containerSuffix,
     })
-    // 実装時は、以下のコメントを外して
-    // .withNoRecreate()
     .up();
 
   const apiContainer = apiEnvironment.getContainer(
@@ -33,7 +33,7 @@ export const setupApiContainer = async () => {
     apiPublicUrl: `http://${host}:${port}`,
     networkName,
     teardown: async () => {
-      await apiEnvironment.down({ removeVolumes: true });
+      await apiEnvironment.down();
     },
   };
 };

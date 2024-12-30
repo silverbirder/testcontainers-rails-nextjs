@@ -15,7 +15,7 @@ export const setupWebContainer = async (
         API_URL: apiInternalUrl,
         NEXT_PUBLIC_API_URL: apiPublicUrl,
       })
-      .build("web", { deleteOnExit: true })
+      .build("web")
   )
     .withExposedPorts(WEB_PORT)
     .withNetworkMode(networkName)
@@ -28,7 +28,7 @@ export const setupWebContainer = async (
     webContainer,
     webHost,
     teardown: async () => {
-      await webContainer.stop({ remove: true, removeVolumes: true });
+      await webContainer.stop();
     },
   };
 };
