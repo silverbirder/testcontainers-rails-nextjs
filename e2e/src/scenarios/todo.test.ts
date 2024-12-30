@@ -77,9 +77,20 @@ describe("Todo App", () => {
     await todoPage.navigate(todosPageUrl);
 
     // Assert
+    // Web
     const todos = await todoPage.getTodos();
     expect(todos).toHaveLength(1);
     expect(todos[0]).toEqual({ name: newTodo, checked: false });
+    // Rails
+    const result = await apiContainer.exec([
+      "bin/rails",
+      "runner",
+      "puts Todo.all.to_json",
+    ]);
+    const railsTodos = JSON.parse(result.output.trim());
+    expect(railsTodos).toHaveLength(1);
+    expect(railsTodos[0].name).toBe(newTodo);
+    expect(railsTodos[0].checked).toBe(false);
 
     await browser.close();
   });
