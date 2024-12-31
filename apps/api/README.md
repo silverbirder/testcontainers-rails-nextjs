@@ -26,5 +26,5 @@ Things you may want to cover:
 ## Docker
 
 ```
-API_PORT=3200 docker-compose up -d
+API_PORT=3000 docker-compose up -d
 ```
