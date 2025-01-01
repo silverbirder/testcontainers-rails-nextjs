@@ -42,7 +42,7 @@ npm run test
   - Verifies the existence of the database and tables in MySQL.
   - Validates API responses.
   - Confirms page titles using Playwright.
-- Todo App:
+- Integration test:
   - Adds, toggles, and deletes todo items.
   - Persists data after reload.
 
