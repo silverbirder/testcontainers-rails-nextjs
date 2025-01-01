@@ -18,7 +18,7 @@ A project that demonstrates end-to-end testing of a Rails API and Next.js web ap
 - **`setupWebContainer`**: Builds and starts the Next.js container.
 - **Tests**:
   - **`health.test.ts`**: Verifies the setup and health of API, DB, and Web containers.
-  - **`todo-app.test.ts`**: Tests CRUD operations on a Todo application.
+  - **`integration.test.ts`**: Tests CRUD operations on a Todo application.
 
 ### How to Run
 
