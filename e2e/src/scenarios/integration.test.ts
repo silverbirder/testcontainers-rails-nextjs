@@ -4,7 +4,7 @@ import { setupApiContainer, setupWebContainer } from "../setup";
 import { chromium } from "@playwright/test";
 import { TodoPage } from "../pages";
 
-describe("Todo App", () => {
+describe("Integration test", () => {
   let apiContainer: StartedTestContainer;
   let webContainer: StartedTestContainer;
   let apiPublicUrl: string;

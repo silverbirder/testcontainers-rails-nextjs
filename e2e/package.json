@@ -4,7 +4,7 @@
   "scripts": {
     "test": "vitest",
     "test:health": "vitest ./src/scenarios/health.test.ts",
-    "test:todo": "vitest ./src/scenarios/todo.test.ts",
+    "test:integration": "vitest ./src/scenarios/integration.test.ts",
     "example": "playwright test",
     "example:codegen": "playwright codegen http://localhost:3200"
   },
