@@ -1,6 +1,6 @@
 ## COMMAND
 
-```
+```bash
 npm run test
 DEBUG=testcontainers* npm run test
 DEBUG=testcontainers* npm run test:health
